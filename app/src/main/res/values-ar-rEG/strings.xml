@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PicoworkerAppProfitCalculator</string>
+    <string name="totle_jobs">عدد الوظائف</string>
+    <string name="earn_per_job">تكلفه كل وظيفه</string>
+    <string name="hour">عدد ساعات العمل</string>
+    <string name="Calculator">احسب</string>
+    <string name="earning_per_hour">"الربح في كل "</string>
+    <string name="hour_name">ساعه</string>
+</resources>

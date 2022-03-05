@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="totle_jobs">totle jobs</string>
+    <string name="earn_per_job">earn per job</string>
+    <string name="hour">hour</string>
+    <string name="earning_per_hour">earning per</string>
+    <string name="hour_name">hour</string>
+</resources>

@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">PicoworkerAppProfitCalculator</string>
+    <string name="totle_jobs">totle jobs</string>
+    <string name="earn_per_job">earn per job</string>
+    <string name="hour">hour</string>
+    <string name="Calculator">Calculator</string>
+    <string name="admobBannerAds" translatable="false">ca-app-pub-4093539001085232/4979256132</string>
+    <string name="admobIntersAds" translatable="false">ca-app-pub-4093539001085232/7812468887</string>
+    <string name="admobAppOpenAds" translatable="false">ca-app-pub-4093539001085232/1727897520</string>
+    <string name="admobRewordsAds" translatable="false">ca-app-pub-4093539001085232/5667142532</string>
+    <string name="earning_per_hour">earning per</string>
+    <string name="hour_name">hour</string>
+    <string name="start_App_id_key" translatable="false">201839901</string>
+</resources>

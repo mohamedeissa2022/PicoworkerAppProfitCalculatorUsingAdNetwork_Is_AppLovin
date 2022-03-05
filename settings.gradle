@@ -1,0 +1,16 @@
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+
+        maven {
+            url 'https://android-sdk.is.com/'
+        }
+        maven{ url "https://imobile-maio.github.io/maven" }
+        maven { url "https://sdk.tapjoy.com/"}
+        jcenter() // Warning: this repository is going to shut down soon
+    }
+}
+rootProject.name = "PicoworkerAppProfitCalculator"
+include ':app'

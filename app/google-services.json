@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "800181998714",
+    "project_id": "picoworkerapp",
+    "storage_bucket": "picoworkerapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:800181998714:android:b6e31502753d9b914fd7c3",
+        "android_client_info": {
+          "package_name": "com.dev.picoworkerappprofitcalculator.moha"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "800181998714-jq8dfh24fo2b8iu9gnvjbs93rcotlcrk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAzqpfnAnd8NU_z_edrEK2m0Ioo4B-2B70"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "800181998714-jq8dfh24fo2b8iu9gnvjbs93rcotlcrk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

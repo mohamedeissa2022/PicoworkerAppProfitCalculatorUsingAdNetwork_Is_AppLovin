@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:icon="@drawable/ic_launcher_foreground">
+    <extra
+        android:name="active"
+        android:value="false" />
+    <extra
+        android:name="ad_banner"
+        android:value="test" />
+    <extra
+        android:name="ad_inters"
+        android:value="test" />
+
+</PreferenceScreen>
