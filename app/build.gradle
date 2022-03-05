@@ -11,8 +11,8 @@ android {
         applicationId "com.dev.picoworkerappprofitcalculator.moha"
         minSdk 21
         targetSdk 31
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "1.0.5"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -45,6 +45,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-inappmessaging-display'
     implementation 'com.google.firebase:firebase-config'
     implementation 'com.startapp:inapp-sdk:4.9.1'
+    implementation 'com.google.firebase:firebase-firestore'
 
     implementation 'com.ironsource.sdk:mediationsdk:7.1.14'
     implementation 'com.google.android.gms:play-services-appset:16.0.2'

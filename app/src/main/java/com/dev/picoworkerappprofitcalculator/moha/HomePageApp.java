@@ -23,6 +23,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dev.picoworkerappprofitcalculator.moha.db.data;
 import com.google.android.gms.ads.AdError;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
@@ -43,6 +44,7 @@ import com.google.android.play.core.review.ReviewManager;
 import com.google.android.play.core.review.ReviewManagerFactory;
 import com.google.android.play.core.review.model.ReviewErrorCode;
 import com.google.android.play.core.review.testing.FakeReviewManager;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 import com.ironsource.mediationsdk.IronSource;
@@ -53,7 +55,7 @@ public class HomePageApp extends AppCompatActivity {
     private InterstitialAd mInterstitialAd;
 
 
-
+public data firebaseGetData ;
     private Bundle data = new Bundle();
     public static String rateNow;
     private static boolean activeData = false;
@@ -68,18 +70,18 @@ public class HomePageApp extends AppCompatActivity {
     private static ReviewManager manager;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page_app);
         startAppAdsManger = new startAppAdsManger(this);
-        Toast.makeText(this, "ad banner code:- "+ad_banner_config_firebase, Toast.LENGTH_SHORT).show();
+
+
         et_hour = findViewById(R.id.et_hour);
         et_earn_par_job = findViewById(R.id.et_earn_par_job);
         et_jobs = findViewById(R.id.et_jobs);
         String myname = Names();
-        Log.d("name:",myname);
+        Log.d("name:", myname);
         mAdView = findViewById(R.id.ads);
         ad_Banner(true, getString(R.string.admobBannerAds));
         btn = findViewById(R.id.btn_calculator);
@@ -106,11 +108,11 @@ public class HomePageApp extends AppCompatActivity {
                 try {
                     if (cunt == 5) {
                         // ايقاف الاعلانات لحد مينتهي الليميت بتاع admob
-                      //  boolean ad = ad_Interstitial(false, getString(R.string.admobIntersAds));
+                        //  boolean ad = ad_Interstitial(false, getString(R.string.admobIntersAds));
 
                     } else {
 
-                     //   boolean ad = ad_Interstitial(true, getString(R.string.admobIntersAds));
+                        //   boolean ad = ad_Interstitial(true, getString(R.string.admobIntersAds));
                         cunt++;
 
                     }
@@ -189,7 +191,6 @@ public class HomePageApp extends AppCompatActivity {
                             Log.i(TAG, loadAdError.getMessage());
 
 
-
                             mInterstitialAd = null;
                         }
                     });
@@ -258,8 +259,7 @@ public class HomePageApp extends AppCompatActivity {
             public void onClick(View view) {
 
 
-
-               // boolean ad = ad_Interstitial(true, getString(R.string.admobIntersAds));
+                // boolean ad = ad_Interstitial(true, getString(R.string.admobIntersAds));
 
 
                 dialog.dismiss();
@@ -331,7 +331,7 @@ public class HomePageApp extends AppCompatActivity {
 
         FirebaseRemoteConfig mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
         FirebaseRemoteConfigSettings configSettings = new FirebaseRemoteConfigSettings.Builder()
-                .setMinimumFetchIntervalInSeconds(1)
+                .setMinimumFetchIntervalInSeconds(3)
                 .build();
         mFirebaseRemoteConfig.setConfigSettingsAsync(configSettings);
         mFirebaseRemoteConfig.setDefaultsAsync(R.xml.remote_config_defaults);
@@ -348,15 +348,16 @@ public class HomePageApp extends AppCompatActivity {
                     public void onComplete(@NonNull Task<Boolean> task) {
                         if (task.isSuccessful()) {
                             activeData = task.getResult();
-                            ad_banner_config_firebase=task.getResult().toString();
-                            ad_inters_config_firebase=task.getResult().toString();
+                            ad_banner_config_firebase = task.getResult().toString();
+                            ad_inters_config_firebase = task.getResult().toString();
                             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
                             SharedPreferences.Editor editor = sharedPreferences.edit();
                             editor.putBoolean("active", activeData);
-                            Log.d("adBannner",ad_banner_config_firebase);
-                            Log.d("adInters",ad_inters_config_firebase);
+                            Log.d("adBannner", ad_banner_config_firebase);
+                            Log.d("adInters", ad_inters_config_firebase);
                             editor.apply();
-                              Log.d(TAG, "Config params updated: " + activeData);
+                            Log.d(TAG, "Config params updated: " + activeData);
+                            Log.d("adBanners", "Config Banner: " + ad_banner_config_firebase);
 
                         } else {
 
@@ -367,25 +368,34 @@ public class HomePageApp extends AppCompatActivity {
                 });
 
 
-
-
     }
-
-
-
-
 
 
     protected void onResume() {
         super.onResume();
-        IronSource.onResume(this);
+        config(this);
+        firebaseGetData.dataSet(this);
     }
 
     protected void onPause() {
         super.onPause();
-
+        config(this);
+        firebaseGetData.dataSet(this);
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        config(this);
+        firebaseGetData.dataSet(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        config(this);
+        firebaseGetData.dataSet(this);
+    }
 
     public static String Names() {
         String names = "Mohamed";
