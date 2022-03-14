@@ -2,10 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.dev.picoworkerappprofitcalculator.moha">
-<uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.Ad_ID" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
     <application
         android:name=".app"
         android:allowBackup="true"
@@ -34,11 +37,49 @@
             </intent-filter>
 
         </activity>
+        <activity
+            android:name="com.ironsource.sdk.controller.ControllerActivity"
+            android:configChanges="orientation|screenSize"
+            android:hardwareAccelerated="true" />
+        <activity
+            android:name="com.ironsource.sdk.controller.InterstitialActivity"
+            android:configChanges="orientation|screenSize"
+            android:hardwareAccelerated="true"
+            android:theme="@android:style/Theme.Translucent" />
+        <activity
+            android:name="com.ironsource.sdk.controller.OpenUrlActivity"
+            android:configChanges="orientation|screenSize"
+            android:hardwareAccelerated="true"
+            android:theme="@android:style/Theme.Translucent" />
+        <provider
+            android:authorities="${applicationId}.IronsourceLifecycleProvider"
+            android:name="com.ironsource.lifecycle.IronsourceLifecycleProvider"
+            android:exported="true" />
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-4093539001085232~7605419478"/>
-        <meta-data android:name="com.startapp.sdk.APPLICATION_ID" android:value="@string/start_App_id_key" />
-        <meta-data android:name="com.startapp.sdk.RETURN_ADS_ENABLED" android:value="false" />
+            android:value="@string/appid_mmedm1915"/>
+
+        <meta-data android:name="applovin.sdk.key"
+            android:value="2-6QdTdBiGP2TOgNNXhfKS6h1IB2Ra7e8GFKdAGrkot6Lz9EiVyRUUG-TWDfHD3mlZ0g8I_K-sy6iWFPTpPAqW"/>
+
+
+        <activity android:name="com.adcolony.sdk.AdColonyInterstitialActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"
+            android:hardwareAccelerated="true"/>
+        <activity android:name="com.adcolony.sdk.AdColonyAdViewActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"
+            android:hardwareAccelerated="true"/>
+
+        <provider
+            android:name="com.vungle.warren.utility.VungleProvider"
+            android:authorities="${applicationId}.vungle-provider"
+            android:exported="false" />
+        <meta-data android:name="com.startapp.sdk.APPLICATION_ID" android:value="201839901" />
+
+
+
     </application>
 
 </manifest>

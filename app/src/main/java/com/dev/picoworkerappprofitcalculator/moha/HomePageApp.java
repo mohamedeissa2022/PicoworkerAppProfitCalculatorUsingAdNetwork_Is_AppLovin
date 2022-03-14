@@ -1,28 +1,29 @@
 package com.dev.picoworkerappprofitcalculator.moha;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
+import android.content.ClipboardManager;
 import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RatingBar;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.adcolony.sdk.AdColony;
+import com.applovin.mediation.ads.MaxInterstitialAd;
 import com.dev.picoworkerappprofitcalculator.moha.db.data;
 import com.google.android.gms.ads.AdError;
 import com.google.android.gms.ads.AdListener;
@@ -36,45 +37,116 @@ import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.gms.ads.interstitial.InterstitialAd;
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.android.play.core.review.ReviewInfo;
-import com.google.android.play.core.review.ReviewManager;
-import com.google.android.play.core.review.ReviewManagerFactory;
-import com.google.android.play.core.review.model.ReviewErrorCode;
-import com.google.android.play.core.review.testing.FakeReviewManager;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
-import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
+import com.ironsource.mediationsdk.ISBannerSize;
 import com.ironsource.mediationsdk.IronSource;
+import com.ironsource.mediationsdk.IronSourceBannerLayout;
+import com.ironsource.mediationsdk.logger.IronSourceError;
+import com.ironsource.mediationsdk.sdk.BannerListener;
 import com.startapp.sdk.adsbase.StartAppAd;
+import com.startapp.sdk.adsbase.StartAppSDK;
 
 public class HomePageApp extends AppCompatActivity {
+    private static String APP_ID = "appcef2aa1328bb423e8b";
+    private static String ZONE_IDS = "vz8f3dde53ed66435596";
     private AdView mAdView;
     private InterstitialAd mInterstitialAd;
-
-
-public data firebaseGetData ;
+    public ads_mangers AdManager;
+    public ClipboardManager clipboardManager;
+    public data firebaseGetData;
     private Bundle data = new Bundle();
     public static String rateNow;
     private static boolean activeData = false;
     private static String ad_banner_config_firebase = "test";
     private static String ad_inters_config_firebase = "test";
     private final static String TAG = HomePageApp.ACTIVITY_SERVICE;
+    private IronSourceBannerLayout mIronSourceBannerLayout;
+    private MaxInterstitialAd interstitialAd;
+    private int retryAttempt;
+public StartAppAd startAppAd;
+
     Button btn;
     private int cunt = 0;
     EditText et_hour, et_earn_par_job, et_jobs;
     private static startAppAdsManger startAppAdsManger;
-    private static ReviewInfo reviewInfo;
-    private static ReviewManager manager;
+    public ActivityInfo activityInfo;
+    public ApplovinListnerAds applovinListnerAds;
+
+    public adColony adColony;
+
+    public vungleAds vungleAds = new vungleAds(this);
+
+    public static FrameLayout bannerContainer;
+    public static String appKey = "135db5891";
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page_app);
-        startAppAdsManger = new startAppAdsManger(this);
+        adColony = new adColony();
+        AdColony.configure(this, APP_ID, ZONE_IDS);
+        StartAppSDK.init(this, "201839901", true);
+
+
+        vungleAds.appId = "6200e0dd884d4921d9e895f5";
+        vungleAds.InterstitialAd();
+
+        vungleAds.data();
+
+
+        applovinListnerAds = new ApplovinListnerAds(this);
+        bannerContainer = findViewById(R.id.bannerContainer);
+        applovinListnerAds.createInterstitialAd();
+        applovinListnerAds.createRewardedAd();
+        applovinListnerAds.createMrecAd();
+
+
+        AdManager = new ads_mangers(this);
+        AdManager.init();
+        // AdManager.AdBanner();
+
+        //  Toast.makeText(this, "gr:-"+activityInfoGravity, Toast.LENGTH_SHORT).show();
+        mIronSourceBannerLayout = IronSource.createBanner(this, ISBannerSize.BANNER);
+        bannerContainer.addView(mIronSourceBannerLayout);
+        mIronSourceBannerLayout.setBannerListener(new BannerListener() {
+            @Override
+            public void onBannerAdLoaded() {
+            }
+
+            @Override
+            public void onBannerAdLoadFailed(IronSourceError ironSourceError) {
+
+            }
+
+            @Override
+            public void onBannerAdClicked() {
+
+            }
+
+            @Override
+            public void onBannerAdScreenPresented() {
+
+            }
+
+            @Override
+            public void onBannerAdScreenDismissed() {
+
+            }
+
+            @Override
+            public void onBannerAdLeftApplication() {
+
+            }
+        });
+        IronSource.loadBanner(mIronSourceBannerLayout, "DefaultBanner");
+
+
+        //  startAppAdsManger = new startAppAdsManger(this);
+
+
+        // set the interstitial listener
 
 
         et_hour = findViewById(R.id.et_hour);
@@ -83,9 +155,9 @@ public data firebaseGetData ;
         String myname = Names();
         Log.d("name:", myname);
         mAdView = findViewById(R.id.ads);
-        ad_Banner(true, getString(R.string.admobBannerAds));
+        //ad_Banner(false, getString(R.string.admobBannerAds));
         btn = findViewById(R.id.btn_calculator);
-        config(this);
+        //44 config(this);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -101,19 +173,24 @@ public data firebaseGetData ;
                     data.putString("hour", et_hour.getText().toString());
                     data.putString("eran_per_job", et_earn_par_job.getText().toString());
                     data.putString("jobsNumbers", et_jobs.getText().toString());
-
+                    // AdManager.InterstitialAdIronSource();
+                    //  applovinListnerAds.showAd();
+                   // adColony.start();
                 }
                 alert(HomePageApp.this);
 
                 try {
-                    if (cunt == 5) {
+                    if (cunt == 3) {
+                        applovinListnerAds.showRewardedVideo();
                         // ايقاف الاعلانات لحد مينتهي الليميت بتاع admob
-                        //  boolean ad = ad_Interstitial(false, getString(R.string.admobIntersAds));
-
+                        boolean ad = ad_Interstitial(false, getString(R.string.admobIntersAds2_mmedm1915));
+                        cunt=0;
                     } else {
+                       // applovinListnerAds.showAd();
 
-                        //   boolean ad = ad_Interstitial(true, getString(R.string.admobIntersAds));
+                           boolean ad = ad_Interstitial(true, getString(R.string.admobIntersAds2_mmedm1915));
                         cunt++;
+                       // StartAppAd.showAd(HomePageApp.this);
 
                     }
 
@@ -125,6 +202,7 @@ public data firebaseGetData ;
 
 
     }
+
 
     protected boolean ad_Banner(boolean isActiveAd, String adId) {
         if (isActiveAd) {
@@ -259,9 +337,16 @@ public data firebaseGetData ;
             public void onClick(View view) {
 
 
-                // boolean ad = ad_Interstitial(true, getString(R.string.admobIntersAds));
+                 boolean ad = ad_Interstitial(true, getString(R.string.admobIntersAds2_mmedm1915));
+
+                //  iron_source_Ad_Interstitial_rewordVideo(getBaseContext());
+                // AdManager.InterstitialRewordVideo();
+
+              //  applovinListnerAds.showAd();
+               // startAppAd.loadAd(StartAppAd.AdMode.REWARDED_VIDEO);
 
 
+             //   adColony.start();
                 dialog.dismiss();
 
             }
@@ -270,137 +355,42 @@ public data firebaseGetData ;
     }
 
 
-//   public static void alertRatingBar(Context context) {
-//
-//        View alertCustomdialog = LayoutInflater.from(context).inflate(R.layout.alert_rating_bar, null);
-//        AlertDialog.Builder alert = new AlertDialog.Builder(context);
-//        alert.setView(alertCustomdialog);
-//
-//
-//        RatingBar ratingBar = alertCustomdialog.findViewById(R.id.rb_rate_app);
-//
-//
-//        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-//            @Override
-//            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
-//
-//                float rate = ratingBar.getRating();
-//                rateNow = String.valueOf(rate);
-//
-//
-//            }
-//        });
-//
-//
-//        TextView my_be_later = alertCustomdialog.findViewById(R.id.tv_my_be_later);
-//
-//
-//        Button btn = alertCustomdialog.findViewById(R.id.btn_rate_now);
-//
-//        btn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                // go to google play
-//                Toast.makeText(context, "rate is :- " + rateNow, Toast.LENGTH_SHORT).show();
-//                Intent i = new Intent();
-//                i.setAction(Intent.ACTION_VIEW);
-//                i.setData(Uri.parse(""));
-//
-//            }
-//        });
-//
-//
-//        final AlertDialog dialog = alert.create();
-//        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-//        my_be_later.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//
-//                dialog.dismiss();
-//
-//            }
-//        });
-//        dialog.show();
-//
-//
-//    }
-
-
-    protected static void config(Context context) {
-
-        FirebaseRemoteConfig mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
-        FirebaseRemoteConfigSettings configSettings = new FirebaseRemoteConfigSettings.Builder()
-                .setMinimumFetchIntervalInSeconds(3)
-                .build();
-        mFirebaseRemoteConfig.setConfigSettingsAsync(configSettings);
-        mFirebaseRemoteConfig.setDefaultsAsync(R.xml.remote_config_defaults);
-        activeData = mFirebaseRemoteConfig.getBoolean("active");
-
-
-        ad_banner_config_firebase = mFirebaseRemoteConfig.getString("ad_banner");
-        ad_inters_config_firebase = mFirebaseRemoteConfig.getString("ad_inters");
-
-
-        mFirebaseRemoteConfig.fetchAndActivate()
-                .addOnCompleteListener((Activity) context, new OnCompleteListener<Boolean>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Boolean> task) {
-                        if (task.isSuccessful()) {
-                            activeData = task.getResult();
-                            ad_banner_config_firebase = task.getResult().toString();
-                            ad_inters_config_firebase = task.getResult().toString();
-                            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-                            SharedPreferences.Editor editor = sharedPreferences.edit();
-                            editor.putBoolean("active", activeData);
-                            Log.d("adBannner", ad_banner_config_firebase);
-                            Log.d("adInters", ad_inters_config_firebase);
-                            editor.apply();
-                            Log.d(TAG, "Config params updated: " + activeData);
-                            Log.d("adBanners", "Config Banner: " + ad_banner_config_firebase);
-
-                        } else {
-
-
-                        }
-
-                    }
-                });
-
-
-    }
-
-
-    protected void onResume() {
-        super.onResume();
-        config(this);
-        firebaseGetData.dataSet(this);
-    }
-
-    protected void onPause() {
-        super.onPause();
-        config(this);
-        firebaseGetData.dataSet(this);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        config(this);
-        firebaseGetData.dataSet(this);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        config(this);
-        firebaseGetData.dataSet(this);
-    }
-
     public static String Names() {
         String names = "Mohamed";
         return String.format("name is :- %s", names);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+      //  startAppAdsManger.startAppFullScreenVideoReword();
+
+
+    }
+
+    protected void onResume() {
+        super.onResume();
+//        config(this);
+//        firebaseGetData.dataSet(this);
+        IronSource.onResume(this);
+
+        //startAppAdsManger.startAppFullScreenVideoReword();
+
+    }
+
+    protected void onPause() {
+        super.onPause();
+//        config(this);
+//        firebaseGetData.dataSet(this);
+        IronSource.onPause(this);
+
+       // startAppAdsManger.startAppFullScreenVideoReword();
+
+    }
+    @Override
+    public void onBackPressed() {
+        StartAppAd.onBackPressed(this);
+        super.onBackPressed();
+    }
 
 }

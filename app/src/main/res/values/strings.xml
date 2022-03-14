@@ -8,6 +8,22 @@
     <string name="admobIntersAds" translatable="false">ca-app-pub-4093539001085232/7812468887</string>
     <string name="admobAppOpenAds" translatable="false">ca-app-pub-4093539001085232/1727897520</string>
     <string name="admobRewordsAds" translatable="false">ca-app-pub-4093539001085232/5667142532</string>
+
+
+
+
+
+
+
+
+
+/// mmedm1915@gmail.com الشفرات الاعلانيه للحساب ده ---
+    <string name="appid_mmedm1915" translatable="false">ca-app-pub-1249352256612112~5419258730</string>
+
+    <string name="admobBannerAds2_mmedm1915" translatable="false">ca-app-pub-1249352256612112/6157625334</string>
+    <string name="admobIntersAds2_mmedm1915" translatable="false">ca-app-pub-1249352256612112/4652971977</string>
+
+
     <string name="earning_per_hour">earning per</string>
     <string name="hour_name">hour</string>
     <string name="start_App_id_key" translatable="false">201839901</string>

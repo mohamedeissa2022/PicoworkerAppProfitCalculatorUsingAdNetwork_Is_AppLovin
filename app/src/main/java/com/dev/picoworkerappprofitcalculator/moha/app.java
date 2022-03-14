@@ -10,14 +10,17 @@ import com.dev.picoworkerappprofitcalculator.moha.db.data;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+import com.ironsource.mediationsdk.IronSource;
 
 public class app extends Application {
-    public data firebaseGetData ;
+
+
 
     @Override
     public void onCreate() {
         super.onCreate();
-        firebaseGetData=new data(this);
+
+
     }
 
 }
